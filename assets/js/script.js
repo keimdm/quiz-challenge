@@ -27,13 +27,22 @@ var playerInitials = document.createElement("ul");
 var playerScores = document.createElement("ul");
 
 //HTML Element Building
-body.setAttribute("style", "color: black; font-size: 16px; font-family: sans-serif");
+document.body.setAttribute("style", "color: black; font-size: 16px; font-family: sans-serif; box-sizing: border-box; background-color: lemonchiffon");
 
-header.setAttribute("style", "width: 100%; height: 50px; display: flex; flex-direction: row; justify-content: flex-start; align-items: center; background-color: gray");
+header.setAttribute("style", "width: 100%; height: 3rem; display: flex; flex-direction: row; justify-content: space-between; align-items: center; padding: 0 2rem; background-color: gray");
+scoreButton.textContent = "View High Scores";
 title.textContent = "Coding Quiz";
-title.setAttribute("style", "color: black; ")
+title.setAttribute("style", "font-size: 2rem;");
+spacer.textContent = "View High Scores";
+spacer.setAttribute("style", "visibility: hidden");
+
+
+
 //HTML Element Placement
 document.body.appendChild(header);
+header.appendChild(scoreButton);
+header.appendChild(title);
+header.appendChild(spacer);
 
 // State variables
 
