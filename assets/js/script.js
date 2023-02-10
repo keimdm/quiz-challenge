@@ -100,11 +100,40 @@ scoreCard.appendChild(playerInitials);
 scoreCard.appendChild(playerScores);
 
 // State variables
+var timeRemaining = 0;
+var intervalID;
 
 // FUNCTIONS
 function startGame() {
     homeScreen.style.display = "none";
     quizScreen.style.display = "flex";
+    timeRemaining = 90;
+    //executes every 1 second
+    intervalID = setInterval(function () {
+        //update timer
+        var minsLeft = Math.floor(timeRemaining / 60);
+        var secsLeft = Math.floor(timeRemaining % 60);
+        if (secsLeft < 10) {
+            secsLeft = "0" + secsLeft.toString();
+        }
+        timer.textContent = "Timer: " + minsLeft + ":" + secsLeft;
+
+        //check if game over
+        if (timeRemaining < 0) {
+            gameOver();
+            return;
+        }
+
+        //subtract from timer
+        timeRemaining = timeRemaining - 1;
+    }, 1000);
+}
+
+function gameOver() {
+    clearInterval(intervalID);
+    window.alert("Game Over");
+    homeScreen.style.display = "flex";
+    quizScreen.style.display = "none";
 }
 
 // INITIALIZATION
