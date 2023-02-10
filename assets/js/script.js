@@ -46,12 +46,13 @@ introText.textContent = "This quiz is intended to help players practice for codi
 introText.setAttribute("style", "line-height: 1.5rem; margin: 15%; padding: 2rem; background-color: white; border-radius: 10px");
 startButton.textContent = "Start Game";
 startButton.setAttribute("style", "font-size: 2rem; text-align: center; margin: 0 30%; padding: 0.5rem 2rem; background-color: red; color: white; border-radius: 10px");
+startButton.setAttribute("onclick", "startGame()");
 
 //Quiz Screen attributes and content
-quizScreen.setAttribute("style", 'width: 100%; display: flex; flex-direction: column; justify-content: space-around; align-items: center');
+quizScreen.setAttribute("style", 'width: 100%; display: none; flex-direction: column; justify-content: space-around; align-items: center');
 timer.textContent = "Timer: 1:30";
-timer.setAttribute("style", "font-size: 3rem; margin: 0 15%; padding: 2rem; color: white; background-color: black; border-radius: 10px");
-questionCard.setAttribute("style", "display: flex; flex-direction: column; justify-content: space-around; align-items: flex-start; line-height: 1.5rem; margin: 15%; padding: 2rem; background-color: white; border-radius: 10px");
+timer.setAttribute("style", "font-size: 3rem; margin: 10% 15% 0 15%; padding: 2rem; color: white; background-color: black; border-radius: 10px");
+questionCard.setAttribute("style", "display: flex; flex-direction: column; justify-content: space-around; align-items: flex-start; line-height: 1.5rem; margin: 10% 15%; padding: 2rem; background-color: white; border-radius: 10px");
 questionText.textContent = "Question text here: This is a sample question designed to take up enough space in the box to serve as a meaningful demo.";
 questionText.setAttribute("style", "margin: 0 0 1.5rem 0");
 var answers = [answer1, answer2, answer3, answer4];
@@ -61,7 +62,7 @@ for (i = 0; i < answers.length; i++) {
 }
 
 //Score Screen attributes and content
-scoreScreen.setAttribute("style", "width: 100%; display: flex; flex-direction: column; justify-content: space-around; align-items: center");
+scoreScreen.setAttribute("style", "width: 100%; display: none; flex-direction: column; justify-content: space-around; align-items: center");
 scoreCard.setAttribute("style", "display: flex; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; line-height: 1.5rem; margin: 15%; padding: 2rem; background-color: white; border-radius: 10px");
 playerLabel.textContent = "Player Initials:";
 playerLabel.setAttribute("style", "font-size: 1.5rem; align-text: center")
@@ -101,5 +102,9 @@ scoreCard.appendChild(playerScores);
 // State variables
 
 // FUNCTIONS
+function startGame() {
+    homeScreen.style.display = "none";
+    quizScreen.style.display = "flex";
+}
 
 // INITIALIZATION
