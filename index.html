@@ -6,9 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Document</title>
+    <title>Coding Quiz</title>
 </head>
 <body>
+    <header>
+        <p id="score-button">View High Scores</p>
+        <h1>Coding Quiz</h1>
+        <p id="spacer">View High Scores</p>
+    </header>
+    <main>
+        <section id="home-screen">
+            <p id="intro-text">This quiz is intended to help players practice for coding tests given as part of job interviews. After starting the game, players will have 90 seconds to answer as many questions as possible. Entering a wrong answer will remove 15 seconds from the time. \n Press the 'Start Game' button below to get started - good luck!</p>
+            <p id="start-button">Start Game</p>
+        </section>
+        <section id="quiz-screen">
+            <p id="timer"></p>
+            <article>
+                <p id="question-text"></p>
+                <ul id="question-answers">
+                    <li id="answer1"></li>
+                    <li id="answer2"></li>
+                    <li id="answer3"></li>
+                    <li id="answer4"></li>
+                </ul>
+            </article>
+        </section>
+        <section id="score-screen">
+            <article id="score-card">
+                <p id="player-label">Player Initials:</p>
+                <p id="score-label">Score:</p>
+                <ul id="player-initials"></ul>
+                <ul id="player-scores"></ul>
+            </article>
+        </section>
+    </main>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

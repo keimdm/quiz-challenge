@@ -1,0 +1,119 @@
+body {
+    color: black;
+    font-size: 16px;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    background-color: lemonchiffon;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    background-color: gray;
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+#spacer {
+    visibility: hidden;
+}
+
+section {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#home-screen {
+    display: flex;
+}
+
+#intro-text {
+    line-height: 1.5rem;
+    margin: 15%;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#start-button {
+    font-size: 2rem;
+    text-align: center;
+    margin: 0 30%;
+    padding: 0.5rem 2rem;
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+}
+
+#quiz-screen {
+    display: none;
+}
+
+#timer {
+    font-size: 3rem;
+    margin: 10% 15% 0 15%;
+    padding: 2rem;
+    color: white;
+    background-color: black;
+    border-radius: 10px
+}
+
+#question-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    line-height: 1.5rem;
+    margin: 10% 15%;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px
+}
+
+#question-text {
+    margin: 0 0 1.5rem 0;
+}
+
+#question-card ul li {
+    line-height: 1.5rem;
+    margin: 0.5rem 0 0.5rem 2rem;
+    padding: 0.5rem 2rem;
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+}
+
+#score-screen {
+    display: none;
+}
+
+#score-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    line-height: 1.5rem;
+    margin: 15%;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#score-card p {
+    font-size: 1.5rem;
+    align-content: center;
+}
+
+#score-card ul {
+    width: 50%
+}
