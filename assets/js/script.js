@@ -75,9 +75,39 @@ var question5 = {
     answer2: "period",
     answer3: "dash",
     answer4: "colon",
-    correct: ";"
+    correct: "semicolon"
 };
 questions.push(question5);
+
+var question6 = {
+    question: "What is the difference between '==='  and '=='?",
+    answer1: "=== is not a valid operator",
+    answer2: "=== checks decimal places, == does not",
+    answer3: "=== checks for data type as well as value",
+    answer4: "There is no difference",
+    correct: "=== checks for data type as well as value"
+};
+questions.push(question6);
+
+var question7 = {
+    question: "What is the point of including a reset CSS file?",
+    answer1: "To have a consistent starting point when formatting a page",
+    answer2: "To format the page if the program crashes",
+    answer3: "To enable easy pallet swaps",
+    answer4: "To gain access to more font options",
+    correct: "To have a consistent starting point when formatting a page"
+};
+questions.push(question7);
+
+var question8 = {
+    question: "What does 'git checkout -b feature' do?",
+    answer1: "Navigates to the checkout window to confirm purchase",
+    answer2: "Uploads the latest version of a repo to GitHub",
+    answer3: "Cancels the latest commit made",
+    answer4: "Creates a new branch called 'feature'",
+    correct: "Creates a new branch called 'feature'"
+};
+questions.push(question8);
 
 // FUNCTIONS
 function startGame() {
