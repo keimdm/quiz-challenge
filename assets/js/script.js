@@ -102,21 +102,49 @@ scoreCard.appendChild(playerScores);
 // State variables
 var timeRemaining = 0;
 var intervalID;
+var currentScore = 0;
+
+var questions = [];
+
+var question1 = {
+    question: "Which of the following is not a primitive data type?",
+    answer1: "string",
+    answer2: "boolean",
+    answer3: "array",
+    answer4: "number",
+    correct: "array"
+};
+questions.push(question1);
+
+var question2 = {
+    question: "What does HTML stand for?",
+    answer1: "HyperText Markup Language",
+    answer2: "HyperText Managing Links",
+    answer3: "HyperText Making Language",
+    answer4: "HyperText Markup Links",
+    correct: "array"
+};
+questions.push(question2);
 
 // FUNCTIONS
 function startGame() {
+    //game setup
     homeScreen.style.display = "none";
     quizScreen.style.display = "flex";
     timeRemaining = 90;
+    updateClock(timeRemaining);
+
+    var questionRand = Math.floor(Math.random() * questions.length);
+    questionText.textContent = questions[questionRand].question;
+    answer1.textContent = questions[questionRand].answer1;
+    answer2.textContent = questions[questionRand].answer2;
+    answer3.textContent = questions[questionRand].answer3;
+    answer4.textContent = questions[questionRand].answer4;
+
     //executes every 1 second
     intervalID = setInterval(function () {
         //update timer
-        var minsLeft = Math.floor(timeRemaining / 60);
-        var secsLeft = Math.floor(timeRemaining % 60);
-        if (secsLeft < 10) {
-            secsLeft = "0" + secsLeft.toString();
-        }
-        timer.textContent = "Timer: " + minsLeft + ":" + secsLeft;
+        updateClock(timeRemaining);
 
         //check if game over
         if (timeRemaining < 0) {
@@ -131,9 +159,19 @@ function startGame() {
 
 function gameOver() {
     clearInterval(intervalID);
+    updateClock(0);
     window.alert("Game Over");
     homeScreen.style.display = "flex";
     quizScreen.style.display = "none";
+}
+
+function updateClock(x) {
+    var minsLeft = Math.floor(x / 60);
+    var secsLeft = Math.floor(x % 60);
+    if (secsLeft < 10) {
+        secsLeft = "0" + secsLeft.toString();
+    }
+    timer.textContent = "Timer: " + minsLeft + ":" + secsLeft;
 }
 
 // INITIALIZATION
