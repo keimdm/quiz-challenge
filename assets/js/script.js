@@ -9,6 +9,7 @@ var startButton = document.querySelector("#start-button");
 
 var quizScreen = document.querySelector("#quiz-screen");
 var timer = document.querySelector("#timer");;
+var scoreDisplay = document.querySelector("#score-display");
 var questionText = document.querySelector("#question-text");
 var questionAnswers = document.querySelector("#question-answers");
 var answer1 = document.querySelector("#answer1");
@@ -16,6 +17,12 @@ var answer2 = document.querySelector("#answer2");
 var answer3 = document.querySelector("#answer3");
 var answer4 = document.querySelector("#answer4");
 var answers = [answer1, answer2, answer3, answer4];
+
+var scoreInputScreen = document.querySelector("#score-input");
+var scoreLabel = document.querySelector("#score-label")
+var scoreAnnounce = document.querySelector("#score-announce");
+var initialsInput = document.querySelector("#initials-input");
+var submitButton = document.querySelector("#submit-button");
 
 var scoreScreen = document.querySelector("#score-screen");
 var playerInitials = document.querySelector("#player-initials");
@@ -27,6 +34,7 @@ var intervalID;
 var currentScore = 0;
 var currentQuestion;
 
+// creates list of questions
 var questions = [];
 
 var question1 = {
@@ -110,12 +118,15 @@ var question8 = {
 questions.push(question8);
 
 // FUNCTIONS
+// Starts a new round of the quiz
 function startGame() {
     //game setup
     homeScreen.style.display = "none";
     quizScreen.style.display = "flex";
+    scoreInputScreen.style.display = "none";
     scoreScreen.style.display = "none";
     currentScore = 0;
+    updateScore(currentScore);
     timeRemaining = 90;
     updateClock(timeRemaining);
     currentQuestion = getQuestion(currentQuestion);
@@ -136,14 +147,20 @@ function startGame() {
     }, 1000);
 }
 
+//runs when time runs out
 function gameOver() {
     clearInterval(intervalID);
     updateClock(0);
-    window.alert("Game Over");
-    homeScreen.style.display = "flex";
+    homeScreen.style.display = "none";
     quizScreen.style.display = "none";
+    scoreInputScreen.style.display = "flex";
+    scoreScreen.style.display = "none";
+    initialsInput.style.display = "block";
+    submitButton.style.display = "block";
+    scoreLabel.innerHTML = "All done! Your score is " + currentScore + ". Enter your initials (3 characters max) to be added to the high scores list:";
 }
 
+// converts input number in min and sec format and displays
 function updateClock(x) {
     var minsLeft = Math.floor(x / 60);
     var secsLeft = Math.floor(x % 60);
@@ -153,6 +170,12 @@ function updateClock(x) {
     timer.textContent = "Timer: " + minsLeft + ":" + secsLeft;
 }
 
+// updates score display with current score
+function updateScore(x) {
+    scoreDisplay.textContent = "Score: " + x;
+}
+
+// picks a new question, guaranteeing that it's different than the last
 function getQuestion(x) {
     var questionFound = false;
     var questionRand;
@@ -170,15 +193,19 @@ function getQuestion(x) {
     return questions[questionRand];
 }
 
+//determines if a selected answer is correct
 function processAnswer(event) {
     if (timeRemaining > 0) {
         if (event.target.id === "answer1" || event.target.id === "answer2" || event.target.id === "answer3" || event.target.id === "answer4") {
             var answerString = event.target.textContent;
+            //if correct, pick new question and increment score
             if (answerString === currentQuestion.correct) {
                 currentQuestion = getQuestion(currentQuestion);
                 currentScore = currentScore + 1;
+                updateScore(currentScore);
                 console.log(currentScore);
             }
+            //if wrong, subtract time
             else {
                 timeRemaining = Math.max(timeRemaining - 15, 0);
                 updateClock(timeRemaining);
@@ -187,18 +214,78 @@ function processAnswer(event) {
     }
 }
 
+// go to high score page, ending quiz if active
 function showScores() {
     homeScreen.style.display = "none";
     quizScreen.style.display = "none";
+    scoreInputScreen.style.display = "none";
     scoreScreen.style.display = "flex";
     clearInterval(intervalID);
+    //clear previous high scores if present
+    while (playerInitials.firstChild) {
+        playerInitials.removeChild(playerInitials.firstChild);
+    }
+    while (playerScores.firstChild) {
+        playerScores.removeChild(playerScores.firstChild);
+    }
+    var scoresData = JSON.parse(window.localStorage.getItem("scoresData")) || [];
+    var sortGood = false;
+    // bubble sort to get the high scores in order
+    while (!sortGood) {
+        sortGood = true;
+        for (i = 0; i < scoresData.length - 1; i++) {
+            if (scoresData[i].entryScore < scoresData[i + 1].entryScore) {
+                var placeholder = scoresData[i];
+                scoresData[i] = scoresData[i + 1];
+                scoresData[i + 1] = placeholder;
+                sortGood = false;
+            }
+        }
+    }
+    for (i = 0; i < scoresData.length; i++) {
+        var newInitials = document.createElement("li");
+        var newScore = document.createElement("li");
+        newInitials.textContent = scoresData[i].entryInitials;
+        newScore.textContent = scoresData[i].entryScore;
+        playerInitials.appendChild(newInitials);
+        playerScores.appendChild(newScore);
+    }
 }
 
+// go to home page, ending quiz if active
 function showHome() {
     homeScreen.style.display = "flex";
     quizScreen.style.display = "none";
     scoreScreen.style.display = "none";
+    scoreInputScreen.style.display = "none";
     clearInterval(intervalID);
+}
+
+// adds score to list of high scores
+function submitScore(event) {
+    event.preventDefault();
+    var invalidInputs = ["", " ", "  ", "   "];
+    if (invalidInputs.includes(initialsInput.value)) {
+        scoreLabel.innerHMTL = "Invalid input - please try again."
+        initialsInput.value = "";
+    }
+    else if (initialsInput.value.length > 3) {
+        scoreLabel.innerHTML = "Please enter a maximum of 3 characters."
+        initialsInput.value = "";
+    }
+    else {
+        var previousData = JSON.parse(window.localStorage.getItem("scoresData")) || [];
+        var newScore = {
+            entryInitials: initialsInput.value,
+            entryScore: currentScore
+        };
+        previousData.push(newScore);
+        window.localStorage.setItem("scoresData", JSON.stringify(previousData));
+        scoreLabel.innerHTML = "Thanks! You can navigate to the home page or high scores using the links above."
+        initialsInput.style.display = "none";
+        initialsInput.value = "";
+        submitButton.style.display = "none";
+    }
 }
 
 //USER INTERACTION
@@ -209,3 +296,5 @@ questionAnswers.addEventListener("click", processAnswer);
 scoreButton.addEventListener("click", showScores);
 
 title.addEventListener("click", showHome);
+
+submitButton.addEventListener("click", submitScore);

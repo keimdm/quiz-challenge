@@ -16,11 +16,12 @@
     </header>
     <main>
         <section id="home-screen">
-            <p id="intro-text">This quiz is intended to help players practice for coding tests given as part of job interviews. After starting the game, players will have 90 seconds to answer as many questions as possible. Entering a wrong answer will remove 15 seconds from the time. \n Press the 'Start Game' button below to get started - good luck!</p>
+            <p id="intro-text">This quiz is intended to help players practice for coding tests given as part of job interviews. After starting the game, players will have 90 seconds to answer as many questions as possible. Entering a wrong answer will remove 15 seconds from the time. Press the 'Start Game' button below to get started - good luck!</p>
             <p id="start-button">Start Game</p>
         </section>
         <section id="quiz-screen">
             <p id="timer"></p>
+            <P id="score-display"></P>
             <article id="question-card">
                 <p id="question-text"></p>
                 <ul id="question-answers">
@@ -30,6 +31,13 @@
                     <li id="answer4"></li>
                 </ul>
             </article>
+        </section>
+        <section id="score-input">
+            <form>
+                <label for="initials-input" id="score-label">All done! Your score is <span id="score-announce"></span>. Enter your initials (3 characters max) to be added to the high scores list:</label>
+                <input type="text" name="initials-input" id="initials-input">
+                <input type="submit" value="Submit" id="submit-button">
+            </form>
         </section>
         <section id="score-screen">
             <article id="score-card">
