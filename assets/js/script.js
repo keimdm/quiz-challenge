@@ -1,110 +1,300 @@
 // VARIABLES
 
-// HTML Element Creation
-var header = document.createElement("header");
-var title = document.createElement("p");
-var scoreButton = document.createElement("p");
-var spacer = document.createElement("p");
+// HTML Elements
+var title = document.querySelector("#title");
+var scoreButton = document.querySelector("#score-button");
 
-var main = document.createElement("main");
+var homeScreen = document.querySelector("#home-screen");
+var startButton = document.querySelector("#start-button");
 
-var homeScreen = document.createElement("section");
-var introText = document.createElement("p");
-var startButton = document.createElement("p");
-
-var quizScreen = document.createElement("section");
-var timer = document.createElement("p");
-var questionCard = document.createElement("article");
-var questionText = document.createElement("p");
-var questionAnswers = document.createElement("ul");
-var answer1 = document.createElement("li");
-var answer2 = document.createElement("li");
-var answer3 = document.createElement("li");
-var answer4 = document.createElement("li");
-
-var scoreScreen = document.createElement("section");
-var scoreCard = document.createElement("article");
-var playerLabel = document.createElement("p");
-var scoreLabel = document.createElement("p");
-var playerInitials = document.createElement("ul");
-var playerScores = document.createElement("ul");
-
-//HTML Element Building
-document.body.setAttribute("style", "color: black; font-size: 16px; font-family: sans-serif; box-sizing: border-box; background-color: lemonchiffon");
-
-//Header attributes and content
-header.setAttribute("style", "width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 0.5rem 2rem; background-color: gray");
-scoreButton.textContent = "View High Scores";
-title.textContent = "Coding Quiz";
-title.setAttribute("style", "font-size: 2rem; margin: 0 0 0.5rem 0");
-spacer.textContent = "View High Scores";
-spacer.setAttribute("style", "visibility: hidden");
-
-//Home Screen attributes and content
-homeScreen.setAttribute("style", "width: 100%, display: flex; flex-direction: column; justify-content: space-around; align-items: center");
-introText.textContent = "This quiz is intended to help players practice for coding tests given as part of job interviews. After starting the game, players will have 90 seconds to answer as many questions as possible. Entering a wrong answer will remove 15 seconds from the time. \n Press the 'Start Game' button below to get started - good luck!";
-introText.setAttribute("style", "line-height: 1.5rem; margin: 15%; padding: 2rem; background-color: white; border-radius: 10px");
-startButton.textContent = "Start Game";
-startButton.setAttribute("style", "font-size: 2rem; text-align: center; margin: 0 30%; padding: 0.5rem 2rem; background-color: red; color: white; border-radius: 10px");
-startButton.setAttribute("onclick", "startGame()");
-
-//Quiz Screen attributes and content
-quizScreen.setAttribute("style", 'width: 100%; display: none; flex-direction: column; justify-content: space-around; align-items: center');
-timer.textContent = "Timer: 1:30";
-timer.setAttribute("style", "font-size: 3rem; margin: 10% 15% 0 15%; padding: 2rem; color: white; background-color: black; border-radius: 10px");
-questionCard.setAttribute("style", "display: flex; flex-direction: column; justify-content: space-around; align-items: flex-start; line-height: 1.5rem; margin: 10% 15%; padding: 2rem; background-color: white; border-radius: 10px");
-questionText.textContent = "Question text here: This is a sample question designed to take up enough space in the box to serve as a meaningful demo.";
-questionText.setAttribute("style", "margin: 0 0 1.5rem 0");
+var quizScreen = document.querySelector("#quiz-screen");
+var timer = document.querySelector("#timer");;
+var scoreDisplay = document.querySelector("#score-display");
+var questionText = document.querySelector("#question-text");
+var questionAnswers = document.querySelector("#question-answers");
+var answer1 = document.querySelector("#answer1");
+var answer2 = document.querySelector("#answer2");
+var answer3 = document.querySelector("#answer3");
+var answer4 = document.querySelector("#answer4");
 var answers = [answer1, answer2, answer3, answer4];
-for (i = 0; i < answers.length; i++) {
-    answers[i].textContent = "Answer " + (i + 1).toString(); 
-    answers[i].setAttribute("style", "line-height: 1.5rem; margin: 0.5rem 0 0.5rem 2rem; padding: 0.5rem 2rem; background-color: blue; color: white; border-radius: 10px");
-}
 
-//Score Screen attributes and content
-scoreScreen.setAttribute("style", "width: 100%; display: none; flex-direction: column; justify-content: space-around; align-items: center");
-scoreCard.setAttribute("style", "display: flex; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; line-height: 1.5rem; margin: 15%; padding: 2rem; background-color: white; border-radius: 10px");
-playerLabel.textContent = "Player Initials:";
-playerLabel.setAttribute("style", "font-size: 1.5rem; align-text: center")
-scoreLabel.textContent = "Score:";
-scoreLabel.setAttribute("style", "font-size: 1.5rem; align-text: center")
-playerInitials.setAttribute("style", "width: 50%; background-color: green");
-playerScores.setAttribute("style", "width: 50%; background-color: yellow");
+var scoreInputScreen = document.querySelector("#score-input");
+var scoreLabel = document.querySelector("#score-label")
+var scoreAnnounce = document.querySelector("#score-announce");
+var initialsInput = document.querySelector("#initials-input");
+var submitButton = document.querySelector("#submit-button");
 
-//HTML Element Placement
-document.body.appendChild(header);
-header.appendChild(title);
-header.appendChild(scoreButton);
-header.appendChild(spacer);
-
-document.body.appendChild(main);
-main.appendChild(homeScreen);
-homeScreen.appendChild(introText);
-homeScreen.appendChild(startButton);
-
-main.appendChild(quizScreen);
-quizScreen.appendChild(timer);
-quizScreen.appendChild(questionCard);
-questionCard.appendChild(questionText);
-questionCard.appendChild(questionAnswers);
-questionAnswers.appendChild(answer1);
-questionAnswers.appendChild(answer2);
-questionAnswers.appendChild(answer3);
-questionAnswers.appendChild(answer4);
-
-main.appendChild(scoreScreen);
-scoreScreen.appendChild(scoreCard);
-scoreCard.appendChild(playerLabel);
-scoreCard.appendChild(scoreLabel);
-scoreCard.appendChild(playerInitials);
-scoreCard.appendChild(playerScores);
+var scoreScreen = document.querySelector("#score-screen");
+var playerInitials = document.querySelector("#player-initials");
+var playerScores = document.querySelector("#player-scores");
 
 // State variables
+var timeRemaining = 0;
+var intervalID;
+var currentScore = 0;
+var currentQuestion;
+
+// creates list of questions
+var questions = [];
+
+var question1 = {
+    question: "Which of the following is not a primitive data type?",
+    answer1: "string",
+    answer2: "boolean",
+    answer3: "array",
+    answer4: "number",
+    correct: "array"
+};
+questions.push(question1);
+
+var question2 = {
+    question: "What does HTML stand for?",
+    answer1: "HyperText Markup Language",
+    answer2: "HyperText Managing Links",
+    answer3: "HyperText Making Language",
+    answer4: "HyperText Markup Links",
+    correct: "HyperText Markup Language"
+};
+questions.push(question2);
+
+var question3 = {
+    question: "What does CSS stand for?",
+    answer1: "Cascading Style Syntax",
+    answer2: "Cyber Style Sheets",
+    answer3: "Cyber Style Syntax",
+    answer4: "Cascading Style Sheets",
+    correct: "Cascading Style Sheets"
+};
+questions.push(question3);
+
+var question4 = {
+    question: "Which of the following are valid loop types?",
+    answer1: "until, while",
+    answer2: "for, while",
+    answer3: "do until, for",
+    answer4: "stop at, until",
+    correct: "for, while"
+};
+questions.push(question4);
+
+var question5 = {
+    question: "What character is used to end a line of code in JavaScript?",
+    answer1: "semicolon",
+    answer2: "period",
+    answer3: "dash",
+    answer4: "colon",
+    correct: "semicolon"
+};
+questions.push(question5);
+
+var question6 = {
+    question: "What is the difference between '==='  and '=='?",
+    answer1: "=== is not a valid operator",
+    answer2: "=== checks decimal places, == does not",
+    answer3: "=== checks for data type as well as value",
+    answer4: "There is no difference",
+    correct: "=== checks for data type as well as value"
+};
+questions.push(question6);
+
+var question7 = {
+    question: "What is the point of including a reset CSS file?",
+    answer1: "To have a consistent starting point when formatting a page",
+    answer2: "To format the page if the program crashes",
+    answer3: "To enable easy pallet swaps",
+    answer4: "To gain access to more font options",
+    correct: "To have a consistent starting point when formatting a page"
+};
+questions.push(question7);
+
+var question8 = {
+    question: "What does 'git checkout -b feature' do?",
+    answer1: "Navigates to the checkout window to confirm purchase",
+    answer2: "Uploads the latest version of a repo to GitHub",
+    answer3: "Cancels the latest commit made",
+    answer4: "Creates a new branch called 'feature'",
+    correct: "Creates a new branch called 'feature'"
+};
+questions.push(question8);
 
 // FUNCTIONS
+// Starts a new round of the quiz
 function startGame() {
+    //game setup
     homeScreen.style.display = "none";
     quizScreen.style.display = "flex";
+    scoreInputScreen.style.display = "none";
+    scoreScreen.style.display = "none";
+    currentScore = 0;
+    updateScore(currentScore);
+    timeRemaining = 90;
+    updateClock(timeRemaining);
+    currentQuestion = getQuestion(currentQuestion);
+
+    //executes every 1 second
+    intervalID = setInterval(function () {
+        //update timer
+        updateClock(timeRemaining);
+
+        //check if game over
+        if (timeRemaining < 0) {
+            gameOver();
+            return;
+        }
+
+        //subtract from timer
+        timeRemaining = timeRemaining - 1;
+    }, 1000);
 }
 
-// INITIALIZATION
+//runs when time runs out
+function gameOver() {
+    clearInterval(intervalID);
+    updateClock(0);
+    homeScreen.style.display = "none";
+    quizScreen.style.display = "none";
+    scoreInputScreen.style.display = "flex";
+    scoreScreen.style.display = "none";
+    initialsInput.style.display = "block";
+    submitButton.style.display = "block";
+    scoreLabel.innerHTML = "All done! Your score is " + currentScore + ". Enter your initials (3 characters max) to be added to the high scores list:";
+}
+
+// converts input number in min and sec format and displays
+function updateClock(x) {
+    var minsLeft = Math.floor(x / 60);
+    var secsLeft = Math.floor(x % 60);
+    if (secsLeft < 10) {
+        secsLeft = "0" + secsLeft.toString();
+    }
+    timer.textContent = "Timer: " + minsLeft + ":" + secsLeft;
+}
+
+// updates score display with current score
+function updateScore(x) {
+    scoreDisplay.textContent = "Score: " + x;
+}
+
+// picks a new question, guaranteeing that it's different than the last
+function getQuestion(x) {
+    var questionFound = false;
+    var questionRand;
+    while (!questionFound) {
+        questionRand = Math.floor(Math.random() * questions.length);
+        if (x != questions[questionRand]) {
+            questionFound = true;
+        }
+    }
+    questionText.textContent = questions[questionRand].question;
+    answer1.textContent = questions[questionRand].answer1;
+    answer2.textContent = questions[questionRand].answer2;
+    answer3.textContent = questions[questionRand].answer3;
+    answer4.textContent = questions[questionRand].answer4;
+    return questions[questionRand];
+}
+
+//determines if a selected answer is correct
+function processAnswer(event) {
+    if (timeRemaining > 0) {
+        if (event.target.id === "answer1" || event.target.id === "answer2" || event.target.id === "answer3" || event.target.id === "answer4") {
+            var answerString = event.target.textContent;
+            //if correct, pick new question and increment score
+            if (answerString === currentQuestion.correct) {
+                currentQuestion = getQuestion(currentQuestion);
+                currentScore = currentScore + 1;
+                updateScore(currentScore);
+                console.log(currentScore);
+            }
+            //if wrong, subtract time
+            else {
+                timeRemaining = Math.max(timeRemaining - 15, 0);
+                updateClock(timeRemaining);
+            }
+        }    
+    }
+}
+
+// go to high score page, ending quiz if active
+function showScores() {
+    homeScreen.style.display = "none";
+    quizScreen.style.display = "none";
+    scoreInputScreen.style.display = "none";
+    scoreScreen.style.display = "flex";
+    clearInterval(intervalID);
+    //clear previous high scores if present
+    while (playerInitials.firstChild) {
+        playerInitials.removeChild(playerInitials.firstChild);
+    }
+    while (playerScores.firstChild) {
+        playerScores.removeChild(playerScores.firstChild);
+    }
+    var scoresData = JSON.parse(window.localStorage.getItem("scoresData")) || [];
+    var sortGood = false;
+    // bubble sort to get the high scores in order
+    while (!sortGood) {
+        sortGood = true;
+        for (i = 0; i < scoresData.length - 1; i++) {
+            if (scoresData[i].entryScore < scoresData[i + 1].entryScore) {
+                var placeholder = scoresData[i];
+                scoresData[i] = scoresData[i + 1];
+                scoresData[i + 1] = placeholder;
+                sortGood = false;
+            }
+        }
+    }
+    for (i = 0; i < scoresData.length; i++) {
+        var newInitials = document.createElement("li");
+        var newScore = document.createElement("li");
+        newInitials.textContent = scoresData[i].entryInitials;
+        newScore.textContent = scoresData[i].entryScore;
+        playerInitials.appendChild(newInitials);
+        playerScores.appendChild(newScore);
+    }
+}
+
+// go to home page, ending quiz if active
+function showHome() {
+    homeScreen.style.display = "flex";
+    quizScreen.style.display = "none";
+    scoreScreen.style.display = "none";
+    scoreInputScreen.style.display = "none";
+    clearInterval(intervalID);
+}
+
+// adds score to list of high scores
+function submitScore(event) {
+    event.preventDefault();
+    var invalidInputs = ["", " ", "  ", "   "];
+    if (invalidInputs.includes(initialsInput.value)) {
+        scoreLabel.innerHMTL = "Invalid input - please try again."
+        initialsInput.value = "";
+    }
+    else if (initialsInput.value.length > 3) {
+        scoreLabel.innerHTML = "Please enter a maximum of 3 characters."
+        initialsInput.value = "";
+    }
+    else {
+        var previousData = JSON.parse(window.localStorage.getItem("scoresData")) || [];
+        var newScore = {
+            entryInitials: initialsInput.value,
+            entryScore: currentScore
+        };
+        previousData.push(newScore);
+        window.localStorage.setItem("scoresData", JSON.stringify(previousData));
+        scoreLabel.innerHTML = "Thanks! You can navigate to the home page or high scores using the links above."
+        initialsInput.style.display = "none";
+        initialsInput.value = "";
+        submitButton.style.display = "none";
+    }
+}
+
+//USER INTERACTION
+startButton.addEventListener("click", startGame);
+
+questionAnswers.addEventListener("click", processAnswer);
+
+scoreButton.addEventListener("click", showScores);
+
+title.addEventListener("click", showHome);
+
+submitButton.addEventListener("click", submitScore);
