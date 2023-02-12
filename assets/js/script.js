@@ -268,6 +268,7 @@ function getQuestion(x) {
     }
     questionText.textContent = newQuestion.question;
     answer1.textContent = newQuestion.answer1;
+    console.log(newQuestion.answer1);
     answer2.textContent = newQuestion.answer2;
     answer3.textContent = newQuestion.answer3;
     answer4.textContent = newQuestion.answer4;
