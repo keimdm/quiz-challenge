@@ -117,6 +117,78 @@ var question8 = {
 };
 questions.push(question8);
 
+var question9 = {
+    question: "Which of the following is not considered 'falsy'?",
+    answer1: "0",
+    answer2: "undefined",
+    answer3: "0n",
+    answer4: "1",
+    correct: "1"
+};
+questions.push(question9);
+
+var question10 = {
+    question: "What is the result of the following expression: 'TRUE || FALSE' ?",
+    answer1: "TRUE",
+    answer2: "FALSE",
+    answer3: "undefined",
+    answer4: "0",
+    correct: "TRUE"
+};
+questions.push(question10);
+
+var question11 = {
+    question: "If you start a timer using the setInterval() function, what function is used to stop it?",
+    answer1: "stop()",
+    answer2: "clearInterval()",
+    answer3: "endTimer()",
+    answer4: "removeInterval()",
+    correct: "clearInterval()"
+};
+questions.push(question11);
+
+var question12 = {
+    question: "How do you access an element's color using JavaScript?",
+    answer1: "document.color",
+    answer2: "document.element.color",
+    answer3: "element.color",
+    answer4: "element.style.color",
+    correct: "element.style.color"
+};
+questions.push(question12);
+
+var question13 = {
+    question: "What function is used to convert a JavaScript object into a string suitable for local storage?",
+    answer1: "JSON.parse(object)",
+    answer2: "object.stringify(JSON)",
+    answer3: "JSON.stringify(object)",
+    answer4: "object.JSONString()",
+    correct: "JSON.stringify(object)"
+};
+questions.push(question13);
+
+var question14 = {
+    question: "How many times will the following loop run: for (i = 0; i < 10; i++) ?",
+    answer1: "0",
+    answer2: "10",
+    answer3: "9",
+    answer4: "11",
+    correct: "10"
+};
+questions.push(question14);
+
+var question15 = {
+    question: "If the default font size is set at 16px, what is the value of 3rem?",
+    answer1: "300px",
+    answer2: "3px",
+    answer3: "48px",
+    answer4: "19px",
+    correct: "48px"
+};
+questions.push(question15);
+
+var availableQuestions;
+
 // FUNCTIONS
 // Starts a new round of the quiz
 function startGame() {
@@ -130,6 +202,7 @@ function startGame() {
     timeRemaining = 90;
     updateClock(timeRemaining);
     timer.style.color = "white";
+    availableQuestions = questions;
     currentQuestion = getQuestion(currentQuestion);
 
     //executes every 1 second
@@ -184,17 +257,22 @@ function getQuestion(x) {
     var questionFound = false;
     var questionRand;
     while (!questionFound) {
-        questionRand = Math.floor(Math.random() * questions.length);
-        if (x != questions[questionRand]) {
+        questionRand = Math.floor(Math.random() * availableQuestions.length);
+        if (x != availableQuestions[questionRand]) {
             questionFound = true;
         }
     }
-    questionText.textContent = questions[questionRand].question;
-    answer1.textContent = questions[questionRand].answer1;
-    answer2.textContent = questions[questionRand].answer2;
-    answer3.textContent = questions[questionRand].answer3;
-    answer4.textContent = questions[questionRand].answer4;
-    return questions[questionRand];
+    var newQuestion = availableQuestions.splice(questionRand, 1);
+    if (availableQuestions.length <= 0) {
+        availableQuestions = questions;
+    }
+    questionText.textContent = newQuestion.question;
+    answer1.textContent = newQuestion.answer1;
+    answer2.textContent = newQuestion.answer2;
+    answer3.textContent = newQuestion.answer3;
+    answer4.textContent = newQuestion.answer4;
+    console.log(newQuestion);
+    return newQuestion;
 }
 
 //determines if a selected answer is correct
