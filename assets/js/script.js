@@ -211,7 +211,12 @@ function startGame() {
         updateClock(timeRemaining);
         //check if it should turn red
         if (timeRemaining <= 15) {
-            timer.style.color = "#FF4242";
+            timer.style.color = "rgb(255, 66, 66)";
+        }
+        //check if it should fade back to white
+        else if (timer.style.color === "rgb(255, 66, 66)") {
+            timer.style.transition = "color 0.25s";
+            timer.style.color = "white";
         }
         //check if game over
         if (timeRemaining < 0) {
@@ -266,6 +271,9 @@ function getQuestion(x) {
     if (availableQuestions.length <= 0) {
         availableQuestions = [].concat(questions);
     }
+    for (i = 0; i < answers.length; i++) {
+        answers[i].style.backgroundColor = "#003459";
+    }
     questionText.textContent = newQuestion[0].question;
     answer1.textContent = newQuestion[0].answer1;
     answer2.textContent = newQuestion[0].answer2;
@@ -289,6 +297,9 @@ function processAnswer(event) {
             else {
                 timeRemaining = Math.max(timeRemaining - 15, 0);
                 updateClock(timeRemaining);
+                timer.style.transition = "color 0s";
+                timer.style.color = "rgb(255, 66, 66)";
+                event.target.style.backgroundColor = "rgb(255, 66, 66)";
             }
         }    
     }
