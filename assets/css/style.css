@@ -29,11 +29,16 @@ h1 {
     font-size: 2rem;
     margin: 0 0 0.5rem 0;
     font-weight: bold;
+    transition: color 0.25s;
 }
 
 h1:hover {
     color: var(--mid);
     cursor: pointer;
+}
+
+header p {
+    transition: color 0.25s;
 }
 
 header p:hover {
@@ -43,6 +48,12 @@ header p:hover {
 
 #spacer {
     visibility: hidden;
+}
+
+@media screen and (min-width: 768px) {
+    header {
+        flex-direction: row;    
+    }
 }
 
 section {
@@ -58,7 +69,8 @@ section {
 
 #intro-text {
     line-height: 1.5rem;
-    margin: 15%;
+    max-width: 500px;
+    margin: 10% 10% 5% 10%;
     padding: 2rem;
     background-color: var(--light);
     border-radius: 10px;
@@ -74,6 +86,7 @@ section {
     color: var(--light);
     border-radius: 10px;
     border: 2px solid var(--mid-dark);
+    transition: color 0.25s, background-color 0.25s;
 }
 
 #start-button:hover {
@@ -88,7 +101,7 @@ section {
 
 #timer {
     font-size: 2.5rem;
-    margin: 5% 15% 0 15%;
+    margin: 2.5% 15% 0 15%;
     padding: 2rem;
     color: var(--light);
     background-color: var(--dark);
@@ -103,12 +116,13 @@ section {
 }
 
 #question-card {
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
     line-height: 1.5rem;
-    margin: 5% 15%;
+    margin: 2.5% 15%;
     padding: 2rem;
     background-color: var(--light);
     border-radius: 10px;
@@ -137,10 +151,11 @@ section {
     color: var(--light);
     border-radius: 10px;
     border: 2px solid var(--mid-dark);
+    transition: color 0.25s, background-color 0.25s;
 }
 
 #question-card ul li:hover {
-    background-color: var(--light);
+    background-color: var(--light) !important;
     color: var(--mid-dark);
     cursor: pointer;
 }
@@ -150,6 +165,7 @@ section {
 }
 
 form {
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -180,6 +196,7 @@ label {
     color: var(--light);
     border-radius: 10px;
     border: 2px solid var(--mid-dark);
+    transition: color 0.25s, background-color 0.25s;
 }
 
 #submit-button:hover {
@@ -193,14 +210,14 @@ label {
 }
 
 #score-card {
-    min-width: 60%;
+    min-width: 70%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     line-height: 1.5rem;
-    margin: 15%;
+    margin: 10% 15%;
     padding: 1rem;
     background-color: var(--light);
     border-radius: 10px;
@@ -212,6 +229,7 @@ label {
     margin: 0 0 1.5rem 0;
     font-size: 1.5rem;
     text-align: center;
+    font-weight: bold;
 }
 
 #score-card ul {
@@ -224,4 +242,10 @@ label {
 
 #score-card ul li {
     align-content: center;
+}
+
+@media screen and (min-width: 768px) {
+    #score-card {
+        min-width: 50%;
+    }
 }
