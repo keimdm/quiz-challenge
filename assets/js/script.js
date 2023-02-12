@@ -202,7 +202,7 @@ function startGame() {
     timeRemaining = 90;
     updateClock(timeRemaining);
     timer.style.color = "white";
-    availableQuestions = questions;
+    availableQuestions = [].concat(questions);
     currentQuestion = getQuestion(currentQuestion);
 
     //executes every 1 second
@@ -264,16 +264,14 @@ function getQuestion(x) {
     }
     var newQuestion = availableQuestions.splice(questionRand, 1);
     if (availableQuestions.length <= 0) {
-        availableQuestions = questions;
+        availableQuestions = [].concat(questions);
     }
-    questionText.textContent = newQuestion.question;
-    answer1.textContent = newQuestion.answer1;
-    console.log(newQuestion.answer1);
-    answer2.textContent = newQuestion.answer2;
-    answer3.textContent = newQuestion.answer3;
-    answer4.textContent = newQuestion.answer4;
-    console.log(newQuestion);
-    return newQuestion;
+    questionText.textContent = newQuestion[0].question;
+    answer1.textContent = newQuestion[0].answer1;
+    answer2.textContent = newQuestion[0].answer2;
+    answer3.textContent = newQuestion[0].answer3;
+    answer4.textContent = newQuestion[0].answer4;
+    return newQuestion[0];
 }
 
 //determines if a selected answer is correct
@@ -286,7 +284,6 @@ function processAnswer(event) {
                 currentQuestion = getQuestion(currentQuestion);
                 currentScore = currentScore + 1;
                 updateScore(currentScore);
-                console.log(currentScore);
             }
             //if wrong, subtract time
             else {
