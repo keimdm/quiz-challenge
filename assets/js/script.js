@@ -129,13 +129,17 @@ function startGame() {
     updateScore(currentScore);
     timeRemaining = 90;
     updateClock(timeRemaining);
+    timer.style.color = "white";
     currentQuestion = getQuestion(currentQuestion);
 
     //executes every 1 second
     intervalID = setInterval(function () {
         //update timer
         updateClock(timeRemaining);
-
+        //check if it should turn red
+        if (timeRemaining <= 15) {
+            timer.style.color = "#FF4242";
+        }
         //check if game over
         if (timeRemaining < 0) {
             gameOver();
