@@ -29,11 +29,16 @@ h1 {
     font-size: 2rem;
     margin: 0 0 0.5rem 0;
     font-weight: bold;
+    transition: color 0.25s;
 }
 
 h1:hover {
     color: var(--mid);
     cursor: pointer;
+}
+
+header p {
+    transition: color 0.25s;
 }
 
 header p:hover {
@@ -74,6 +79,7 @@ section {
     color: var(--light);
     border-radius: 10px;
     border: 2px solid var(--mid-dark);
+    transition: color 0.25s, background-color 0.25s;
 }
 
 #start-button:hover {
@@ -137,10 +143,11 @@ section {
     color: var(--light);
     border-radius: 10px;
     border: 2px solid var(--mid-dark);
+    transition: color 0.25s, background-color 0.25s;
 }
 
 #question-card ul li:hover {
-    background-color: var(--light);
+    background-color: var(--light) !important;
     color: var(--mid-dark);
     cursor: pointer;
 }
@@ -180,6 +187,7 @@ label {
     color: var(--light);
     border-radius: 10px;
     border: 2px solid var(--mid-dark);
+    transition: color 0.25s, background-color 0.25s;
 }
 
 #submit-button:hover {

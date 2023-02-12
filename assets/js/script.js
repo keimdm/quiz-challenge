@@ -272,7 +272,7 @@ function getQuestion(x) {
         availableQuestions = [].concat(questions);
     }
     for (i = 0; i < answers.length; i++) {
-        answers[i].style.backgroundColor = "#003459";
+        answers[i].setAttribute("style", "background-color: #003459");
     }
     questionText.textContent = newQuestion[0].question;
     answer1.textContent = newQuestion[0].answer1;
