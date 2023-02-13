@@ -1,4 +1,4 @@
-# portfolio-challenge
+# quiz-challenge
 
 ## Description
 
